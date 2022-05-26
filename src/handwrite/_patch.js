@@ -4,18 +4,18 @@ import { _createElement } from "./_createElement";
 // patch 函数
 // 1
 // 参数
-// - 第一个参数：oldVnode，不是vnode会被转成vnode
+// - 第一个参数：oldVnode 或者 DOM，不是vnode会被转成vnode
 // - 第二个餐素：newVnode
 
 const _patch = function (oldVnode, newVnode) {
   // 第一个参数 - 旧节点不是vnode，则转成vnode
   if (oldVnode.sel === "" || oldVnode.sel === undefined) {
     oldVnode = _vnode(
-      oldVnode.tagName.toLowerCase(),
+      oldVnode.tagName.toLowerCase(), // tagName
       {},
       [],
       undefined,
-      oldVnode
+      oldVnode // 真实的DOM
     );
   }
 
@@ -37,8 +37,13 @@ const _patch = function (oldVnode, newVnode) {
       "为什么要先插入，后删除？因为插入时是需要一个对比节点的，插入谁的前面"
     );
 
-    // 插入新节点
-    _createElement(newVnode, oldVnode.elm);
+    // 将虚拟节点转成真正的DOM节点
+    const newDOM = _createElement(newVnode);
+
+    // 插入新真实的DOM节点
+    if (oldVnode.elm.parentNode && newDOM) {
+      oldVnode.elm.parentNode.insertBefore(newDOM, oldVnode.elm);
+    }
   }
 };
 
