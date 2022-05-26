@@ -40,10 +40,14 @@ const _patch = function (oldVnode, newVnode) {
     // 将虚拟节点转成真正的DOM节点
     const newDOM = _createElement(newVnode);
 
+    // 插入新节点
     // 插入新真实的DOM节点
     if (oldVnode.elm.parentNode && newDOM) {
       oldVnode.elm.parentNode.insertBefore(newDOM, oldVnode.elm);
     }
+
+    // 删除老节点
+    oldVnode.elm.parentNode.removeChild(oldVnode.elm)
   }
 };
 
