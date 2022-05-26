@@ -1,35 +1,11 @@
-import {
-  init,
-  classModule,
-  propsModule,
-  styleModule,
-  eventListenersModule,
-  h,
-} from "snabbdom";
-
-const patch = init([
-  classModule,
-  propsModule,
-  styleModule,
-  eventListenersModule,
-]);
-
-const noop = () => {};
-
-const root = document.getElementById("root");
+import h from "./handwrite/_h.js";
+import patch from "./handwrite/_patch.js";
 
 // h函数可以嵌套
-const vnode = h("ul", [
-  h(
-    "li",
-    {
-      props: {
-        style: "color: blue",
-      },
-    },
-    "list1"
-  ),
-  h("li", "list2"),
-]);
+const vnode = h("ul", {}, '测试');
+
+console.log("vnode", vnode);
+
+const root = document.getElementById("root");
 
 patch(root, vnode);
