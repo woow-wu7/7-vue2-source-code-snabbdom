@@ -27,11 +27,16 @@ cnpm install -D webpack webpack-cli webpack-dev-server html-webpack-plugin
   - 2 新节点有text，旧节点有text
     - 新旧节点的text一样，不做任何处理
     - 新旧节点的text不一样，DOM更新为新的节点text
-  - 3 新节点有children，没有text，旧节点有text
+  - 3 新节点有children，没有text；旧节点有text，没有children
     - DOM删除text
     - 把新节点中的children添加到DOM上
   - 4 新节点有children，旧节点也有children
     - 四个指针 + 递归
+    - (1) 新前与旧前比较 -----> 命中指针后移，没命中往下走，执行(2)
+    - (2) 新后与旧后比较 -----> 命中指针前移，没命中往下走，执行(3)
+    - (3) 新后与旧前比较 -----> 命中，需要移动节点，把 ( 新前 ) 移动到 ( 旧后之后 )；没命中执行(4)
+    - (4) 新前与旧后比较 -----> 命中，需要移动节点，把 ( 新前 ) 移动到 ( 旧前之前 )
+    - 详情：在本项目 xmind/3-四种命中查找.png
 
 # 资料
 
