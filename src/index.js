@@ -8,11 +8,9 @@ const vnode = h("ul", {}, [
   h("li", { key: 3 }, "3"),
 ]);
 const vnode2 = h("ul", {}, [
+  h("li", { key: 3 }, "3"),
   h("li", { key: 1 }, "1"),
   h("li", { key: 2 }, "2"),
-  h("li", { key: 4 }, "新插入的节点1"),
-  h("li", { key: 5 }, "新插入的节点2"),
-  h("li", { key: 3 }, "3"),
 ]);
 // const vnode = h("ul", {}, 'string');
 console.log("vnode", vnode);

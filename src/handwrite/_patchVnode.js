@@ -1,4 +1,5 @@
 import { _createElement } from "./_createElement";
+import { _updateChildren } from "./_updateChildren";
 
 const _patchVnode = (oldVnode, newVnode) => {
   // 1
@@ -22,41 +23,43 @@ const _patchVnode = (oldVnode, newVnode) => {
   // 新节点有children，没有text属性
   else {
     if (oldVnode.children !== undefined && oldVnode.children.length > 0) {
-      let unProcess = 0; // 表示新节点children中没有遍历到的指针
-
       // x
       // 新旧节点都有children
-      for (let i = 0; i < newVnode.children.length; i++) {
-        const currentNewVnode = newVnode.children[i]; // 当前新节点
 
-        let isEqual = false;
-        for (let j = 0; j < oldVnode.children.length; j++) {
-          const currentOldVnode = oldVnode.children[j]; // 当前旧节点
-          if (
-            currentNewVnode?.key === currentOldVnode?.key &&
-            currentNewVnode.sel === currentOldVnode.sel
-          ) {
-            // 两个节点是同一个虚拟节点
-            isEqual = true;
-          }
-        }
+      _updateChildren(oldVnode.elm, oldVnode.children, newVnode.children);
 
-        // 新旧children中比较的两个虚拟节点不相同，直接创建并添加到DOM中去
-        if (!isEqual) {
-          const DOM = _createElement(currentNewVnode);
-          console.log("DOM", DOM);
-          currentNewVnode.elm = DOM;
-          if (unProcess < oldVnode.length) {
-            // 通过 unProcess 找到插入的位置
-            oldVnode.elm.insertBefore(DOM, oldVnode.children[unProcess].elm);
-          } else {
-            // 旧节点children遍历结束了，新节children剩下的直接添加到末尾即可
-            oldVnode.elm.appendChild(DOM);
-          }
-        } else {
-          unProcess++;
-        }
-      }
+      // let unProcess = 0; // 表示新节点children中没有遍历到的指针
+      // for (let i = 0; i < newVnode.children.length; i++) {
+      //   const currentNewVnode = newVnode.children[i]; // 当前新节点
+
+      //   let isEqual = false;
+      //   for (let j = 0; j < oldVnode.children.length; j++) {
+      //     const currentOldVnode = oldVnode.children[j]; // 当前旧节点
+      //     if (
+      //       currentNewVnode?.key === currentOldVnode?.key &&
+      //       currentNewVnode.sel === currentOldVnode.sel
+      //     ) {
+      //       // 两个节点是同一个虚拟节点
+      //       isEqual = true;
+      //     }
+      //   }
+
+      //   // 新旧children中比较的两个虚拟节点不相同，直接创建并添加到DOM中去
+      //   if (!isEqual) {
+      //     const DOM = _createElement(currentNewVnode);
+      //     console.log("DOM", DOM);
+      //     currentNewVnode.elm = DOM;
+      //     if (unProcess < oldVnode.length) {
+      //       // 通过 unProcess 找到插入的位置
+      //       oldVnode.elm.insertBefore(DOM, oldVnode.children[unProcess].elm);
+      //     } else {
+      //       // 旧节点children遍历结束了，新节children剩下的直接添加到末尾即可
+      //       oldVnode.elm.appendChild(DOM);
+      //     }
+      //   } else {
+      //     unProcess++;
+      //   }
+      // }
     } else {
       // y
       // 新节点有children，旧节点没有children
@@ -74,4 +77,4 @@ const _patchVnode = (oldVnode, newVnode) => {
   }
 };
 
-export default _patchVnode;
+export { _patchVnode };

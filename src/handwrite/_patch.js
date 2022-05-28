@@ -1,6 +1,6 @@
 import _vnode from "./_vnode";
 import { _createElement } from "./_createElement";
-import _patchVnode from "./_patchVnode";
+import { _patchVnode } from "./_patchVnode";
 
 // patch 函数
 // 1
