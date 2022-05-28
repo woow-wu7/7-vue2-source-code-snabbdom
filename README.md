@@ -13,6 +13,13 @@ cnpm install -D webpack webpack-cli webpack-dev-server html-webpack-plugin
 
 
 # diff算法
+- 分类
+  - tree diff
+  - component diff
+    - 组件的类型是否一样，不一样是脏组件，直接删除
+    - 组件的类型一样，按原策略逐层比较 类型属性props等
+  - element diff
+    - 添加，删除，移动
 - 同层级比较
 - 只有是 ( 同一个虚拟节点 )，才会进行 ( 精细化比较 )
   - 问题：如何判断是不是同一个虚拟节点
